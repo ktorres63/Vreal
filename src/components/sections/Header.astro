@@ -2,11 +2,14 @@
 import { Globe, User, Menu } from "@lucide/astro";
 ---
 
-<header class="absolute top-0 left-0 w-full z-50">
+<header
+  id="header"
+  class="fixed top-0 left-0 w-full z-50 transition-all duration-300"
+>
   <div
     class="mx-auto max-w-7xl px-6 md:px-12 py-4 flex items-center justify-between"
   >
-    <!-- Logo (imagen real) -->
+    <!-- Logo -->
     <a href="/" class="flex items-center">
       <img
         src="/images/VrealLogo.png"
@@ -15,29 +18,32 @@ import { Globe, User, Menu } from "@lucide/astro";
       />
     </a>
 
-    <!-- Navigation (desktop) -->
+    <!-- Navigation -->
     <nav class="hidden md:flex items-center gap-8 text-sm">
-      <a href="#" class="text-blue-400 border-b-2 border-blue-400 pb-1">
+      <a
+        href="/destinations"
+        class="text-blue-400 border-b-2 border-blue-400 pb-1"
+      >
         Destinations
       </a>
-      <a href="#" class="text-gray-300 hover:text-white transition">
+      <a href="/experiences" class="text-gray-300 hover:text-white transition">
         Experiences
       </a>
-      <a href="#" class="text-gray-300 hover:text-white transition">
+      <a href="/technology" class="text-gray-300 hover:text-white transition">
         Technology
       </a>
-      <a href="#" class="text-gray-300 hover:text-white transition"> About </a>
+      <a href="/about" class="text-gray-300 hover:text-white transition">
+        About
+      </a>
     </nav>
 
-    <!-- Right side -->
+    <!-- Right -->
     <div class="flex items-center gap-3 md:gap-4">
-      <!-- Icons (desktop only) -->
       <div class="hidden md:flex items-center gap-3 text-gray-300">
         <Globe class="w-5 h-5 hover:text-white transition cursor-pointer" />
         <User class="w-5 h-5 hover:text-white transition cursor-pointer" />
       </div>
 
-      <!-- Button (hidden en móvil para no saturar) -->
       <a
         href="#"
         class="hidden md:inline-flex px-5 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium transition shadow-md"
@@ -45,16 +51,31 @@ import { Globe, User, Menu } from "@lucide/astro";
         Get Started
       </a>
 
-      <!-- Mobile menu button -->
       <button class="md:hidden text-gray-300 hover:text-white">
         <Menu class="w-6 h-6" />
       </button>
     </div>
   </div>
 
-  <!-- Background gradient -->
+  <!-- Gradient -->
   <div
     class="absolute inset-0 -z-10 bg-linear-to-b from-black/80 via-black/40 to-transparent"
   >
   </div>
 </header>
+
+<script>
+  const header = document.getElementById("header");
+
+  const onScroll = () => {
+    if (!header) return;
+
+    if (window.scrollY > 50) {
+      header.classList.add("bg-black/70", "backdrop-blur-md", "shadow-lg");
+    } else {
+      header.classList.remove("bg-black/70", "backdrop-blur-md", "shadow-lg");
+    }
+  };
+
+  window.addEventListener("scroll", onScroll);
+</script>
