@@ -1,0 +1,91 @@
+---
+import { Play } from "@lucide/astro";
+const videoSrc = "/videos/output.mp4";
+const posterSrc = "/images/bgVReal.png";
+---
+
+<section class="relative overflow-hidden bg-[#06071B] py-32">
+  <!-- Background glow
+  <div
+    class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.12),transparent_40%)]"
+  >
+  </div> -->
+
+  <div class="relative mx-auto max-w-7xl px-6 md:px-12">
+    <!-- Header -->
+    <div class="mb-14">
+      <p class="text-sm uppercase tracking-[0.35em] text-cyan-400">
+        Visualización Inmersiva
+      </p>
+
+      <h2
+        class="mt-4 text-4xl font-black tracking-tight text-white md:text-6xl"
+      >
+        Experimenta la Realidad
+      </h2>
+    </div>
+
+    <!-- Video container -->
+    <div
+      class="group relative overflow-hidden rounded-3xl border border-white/10 bg-black shadow-[0_0_80px_rgba(59,130,246,0.08)]"
+    >
+      <!-- Video -->
+      <video
+        id="demo-video"
+        class="aspect-video w-full object-cover"
+        poster={posterSrc}
+        preload="metadata"
+        controls
+        playsinline
+      >
+        <source src={videoSrc} type="video/mp4" />
+
+        Tu navegador no soporta videos HTML5.
+      </video>
+
+      <!-- Play overlay -->
+      <button
+        id="play-button"
+        type="button"
+        class="absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity duration-300"
+      >
+        <div
+          class="flex h-24 w-24 items-center justify-center rounded-full bg-cyan-500 shadow-[0_0_40px_rgba(34,211,238,0.6)] transition-all duration-300 hover:scale-110 hover:bg-cyan-400"
+        >
+          <Play class="ml-1 h-10 w-10 fill-white text-white" />
+        </div>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const video = document.querySelector("#demo-video");
+    const button = document.querySelector("#play-button");
+
+    if (!video || !button) return;
+
+    button.addEventListener("click", () => {
+      video.play();
+
+      button.classList.add("opacity-0");
+      button.classList.add("pointer-events-none");
+    });
+
+    video.addEventListener("pause", () => {
+      button.classList.remove("opacity-0");
+      button.classList.remove("pointer-events-none");
+    });
+
+    video.addEventListener("play", () => {
+      button.classList.add("opacity-0");
+      button.classList.add("pointer-events-none");
+    });
+
+    video.addEventListener("ended", () => {
+      button.classList.remove("opacity-0");
+      button.classList.remove("pointer-events-none");
+    });
+  });
+</script>
