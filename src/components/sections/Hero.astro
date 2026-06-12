@@ -5,7 +5,7 @@ const highlight = "límites";
 const rest = "de tu realidad";
 ---
 
-<section id="hero" class="relative h-screen overflow-hidden bg-[#06071B]">
+<section id="hero" class="">
   <!-- Scroll indicator -->
   <div
     class="scroll-indicator absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center"
@@ -18,7 +18,7 @@ const rest = "de tu realidad";
   </div>
 
   <!-- Fondo con experiencia VR -->
-  <div class="vr-background absolute inset-0">
+  <div class="masked-img absolute inset-0">
     <img
       src="/images/bgCatedralVR.png"
       alt="Experiencia VReal"
@@ -86,14 +86,14 @@ const rest = "de tu realidad";
       },
     });
 
-    tl.to(".vr-background", {
+    tl.to(".masked-img", {
       maskSize: "830%",
       webkitMaskSize: "500%",
       duration: 3,
       ease: "power2.inOut",
     })
 
-      .to(".vr-background img", {
+      .to(".masked-img img", {
         scale: 1.15,
         duration: 1,
       })
@@ -118,21 +118,3 @@ const rest = "de tu realidad";
 
   initHero();
 </script>
-
-<style>
-  .vr-background {
-    opacity: 1;
-    mask-image: url("/images/vr-mask.svg");
-    mask-repeat: no-repeat;
-    mask-position: center;
-    mask-size: 30%;
-    -webkit-mask-image: url("/images/vr-mask.svg");
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    -webkit-mask-size: 30%;
-  }
-
-  .hero-content {
-    transform: translateY(50px);
-  }
-</style>
