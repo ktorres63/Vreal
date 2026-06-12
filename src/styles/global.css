@@ -1,1 +1,14 @@
 @import "tailwindcss";
+/*
+@utility masked-img {
+  mask-image: url("/images/VRView.png");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 50%;
+}
+
+@layer components {
+  #hero {
+    @apply relative h-screen w-full flex items-center justify-start overflow-hidden;
+  }
+}*/

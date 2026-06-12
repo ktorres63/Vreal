@@ -1,74 +1,138 @@
 ---
+import { Mouse } from "@lucide/astro";
 const title = "Expande los";
 const highlight = "límites";
 const rest = "de tu realidad";
 ---
 
-<section
-  class="relative h-screen w-full flex items-center justify-start overflow-hidden"
->
-  <!-- Background image -->
-  <img
-    src="/images/bgVReal.png"
-    alt="Machu Picchu VR"
-    class="absolute inset-0 w-full h-full object-cover"
-  />
-
-  <!-- Dark overlay -->
-  <div class="absolute inset-0 bg-black/60"></div>
-
-  <!-- Gradient overlay (top fade) -->
+<section id="hero" class="relative h-screen overflow-hidden bg-[#06071B]">
+  <!-- Scroll indicator -->
   <div
-    class="absolute inset-0 bg-linear-to-b from-black/80 via-black/40 to-transparent"
+    class="scroll-indicator absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center"
   >
-  </div>
-
-  <!-- Content -->
-  <div class="relative z-10 max-w-5xl px-6 md:px-12">
-    <!-- Small label -->
-    <p class="text-sm text-gray-300 mb-4 tracking-wide">• THE FUTURE IS HERE</p>
-
-    <!-- Title -->
-    <h1
-      class="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight"
-    >
-      {title}
-      <br />
-
-      <span
-        class="bg-linear-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent"
-      >
-        {highlight}
-      </span>
-      {rest}
-    </h1>
-
-    <!-- Description -->
-    <p class="mt-6 text-gray-300 max-w-xl">
-      Siente la inmersión total en mundos que desafían la imaginación. Desde el
-      borde de un agujero negro hasta civilizaciones perdidas bajo el océano.
+    <p class="text-xs tracking-[4px] text-white/70 mb-4">
+      DESLIZA PARA EXPLORAR
     </p>
 
-    <!-- Buttons -->
-    <div class="mt-8 flex gap-4">
-      <a
-        href="#"
-        class="px-6 py-3 rounded-lg bg-purple-500 hover:bg-purple-600 transition font-semibold text-white shadow-lg"
-      >
-        Reserva tu Viaje
-      </a>
+    <Mouse size={32} stroke-width={1.5} class="text-white/80" />
+  </div>
 
-      <a
-        href="#"
-        class="px-6 py-3 rounded-lg bg-white/10 hover:bg-white/20 transition text-white backdrop-blur-md"
-      >
-        Explorar Destinos
-      </a>
+  <!-- Fondo con experiencia VR -->
+  <div class="vr-background absolute inset-0">
+    <img
+      src="/images/bgCatedralVR.png"
+      alt="Experiencia VReal"
+      class="w-full h-full object-cover"
+    />
+
+    <div class="dark-overlay absolute inset-0 bg-black opacity-0"></div>
+    <!-- efecto de profundidad -->
+    <div class="absolute inset-0 bg-black/20"></div>
+  </div>
+
+  <!-- Contenido final -->
+  <div
+    class="hero-content absolute inset-0 z-20 flex items-center justify-center text-center opacity-0"
+  >
+    <div class="px-6">
+      <p class="text-sm tracking-[5px] text-gray-300 mb-6">
+        THE FUTURE IS HERE
+      </p>
+
+      <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white">
+        {title}
+
+        <br />
+
+        <span
+          class="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent"
+        >
+          {highlight}
+        </span>
+
+        {rest}
+      </h1>
+
+      <p class="mt-8 max-w-xl mx-auto text-gray-300 text-lg">
+        Explora destinos antes de visitarlos. Vive experiencias inmersivas con
+        VReal.
+      </p>
     </div>
   </div>
-  <!-- Bottom fade -->
-  <div
-    class="absolute bottom-0 left-0 w-full h-64 bg-linear-to-t from-[#06071B] to-transparent"
-  >
-  </div>
 </section>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initHero() {
+    gsap.to(".scroll-indicator", {
+      y: 15,
+      duration: 1.2,
+      repeat: -1,
+      yoyo: true,
+      ease: "power1.inOut",
+    });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#hero",
+        start: "top top",
+        end: "+=3000",
+        scrub: 1.5,
+        pin: true,
+      },
+    });
+
+    tl.to(".vr-background", {
+      maskSize: "830%",
+      webkitMaskSize: "500%",
+      duration: 3,
+      ease: "power2.inOut",
+    })
+
+      .to(".vr-background img", {
+        scale: 1.15,
+        duration: 1,
+      })
+
+      .to(".dark-overlay", {
+        opacity: 0.7,
+        duration: 1,
+      })
+
+      .to(".scroll-indicator", {
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
+      })
+
+      .to(".hero-content", {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+      });
+  }
+
+  initHero();
+</script>
+
+<style>
+  .vr-background {
+    opacity: 1;
+    mask-image: url("/images/vr-mask.svg");
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: 30%;
+    -webkit-mask-image: url("/images/vr-mask.svg");
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: 30%;
+  }
+
+  .hero-content {
+    transform: translateY(50px);
+  }
+</style>
